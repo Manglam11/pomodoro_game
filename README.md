@@ -74,4 +74,4 @@ start → countdown → break → ✔✔✔ → long break → reset
 - Manglam
 - B.Tech (Computer Science)
 - **GitHub:** https://github.com/Manglam11
-- **GitHub:** https://github.com/Manglam11
+- **LinkedIn:** https://www.linkedin.com/in/manglam-dubey/
