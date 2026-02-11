@@ -1,29 +1,32 @@
 from tkinter import *
 import math
 
-
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
 RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 1
+#  actual WORK_MIN = 25
+WORK_MIN = 3
+#  actual SHORT_BREAK_MIN = 5
 SHORT_BREAK_MIN = 2
-LONG_BREAK_MIN = 3
+#  actual LONG_BREAK_MIN = 20
+LONG_BREAK_MIN = 1
 reps = 0
 check_mark_num = 0
+timer = None
+
 # ---------------------------- TIMER RESET ------------------------------- # 
 def reset_timer():
+    global timer, reps, check_mark_num
     timer_label.config(text="Timer")
+    reps, check_mark_num = 0, 0
+    chek_box_label.config(text="")
     canvas.itemconfig(timer_text, text="00:00")
-
-
+    window.after_cancel(timer)
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
-# def minute_and_sec():
-#     sec = count * 60
-#     minute = count
 def start_timer():
     global reps, check_mark_num
     reps += 1
@@ -54,12 +57,8 @@ def start_timer():
         check_mark_num += 1
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
-
-
-
-
 def count_down(count):
-
+    global timer
     count_mnt = math.floor(count/60)
     count_sec = count % 60
     if count_sec in range(0, 10):
@@ -68,19 +67,15 @@ def count_down(count):
     canvas.itemconfig(timer_text, text=f"{count_mnt}:{count_sec}")
     # print(count)
     if count > 0:
-        window.after(50, count_down, count - 1)
+        # actual timer = window.after(1000, count_down, count - 1)
+        timer = window.after(15, count_down, count - 1)
     else:
         start_timer()
-
-
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
 window.title("Pomodoro")
 window.config(padx=100, pady=50, bg=YELLOW)
-
-
-
 
 canvas = Canvas(width= 200, height= 224, bg= YELLOW, highlightthickness= 0)
 tomato_img = PhotoImage(file="tomato.png")
@@ -88,28 +83,17 @@ canvas.create_image(100, 110, image= tomato_img)
 timer_text = canvas.create_text(100, 140, text= "00:00", fill="white", font=(FONT_NAME, 25, "bold"))
 canvas.grid(row=1, column=1)
 
-
-
 timer_label = Label(text="Timer",bg= YELLOW, highlightthickness=0, fg=GREEN, font=(FONT_NAME, 35, "bold"))
 timer_label.grid(row=0, column=1)
 
-
 chek_box_label = Label(text="", bg= YELLOW, highlightthickness=0, fg=GREEN, font=(FONT_NAME, 20, "bold"))
 chek_box_label.grid(row=3, column=1)
+
 start_button = Button(text="Start", command= start_timer)
 start_button.grid(row=2, column=0)
-finish_button = Button(text="Finish")
+finish_button = Button(text="Finish", command= reset_timer)
+
 finish_button.grid(row=2, column=2)
-
-
-
-
-
-
-
-
-
-
 
 
 window.mainloop()
