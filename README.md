@@ -52,7 +52,6 @@ For testing, you can keep them small.
 ## 🎥 Demo
 
 ![demo.gif](demo.gif)
-**App Flow:**
 ```
 start → countdown → break → ✔✔✔ → long break → reset
 ```
